@@ -1,0 +1,41 @@
+int red=2;
+int green=3;
+int blue=4;
+int buzzer=9;
+
+void setup () {
+  pinMode (red,OUTPUT);
+  pinMode (green,OUTPUT);
+  pinMode (blue,OUTPUT);
+  pinMode (buzzer, OUTPUT);
+  Serial.begin (9600);}
+ 
+void loop() {
+  // read the input on analog pin 0:
+  int value = analogRead(A0);
+  
+  if (value > 630) {
+    Serial.println("Soaked");
+    digitalWrite (red,LOW);
+    digitalWrite(green,HIGH);
+    digitalWrite(blue,HIGH);}
+  else if ((value > 300) && (value <= 630)) {
+    Serial.println("Wet");
+    digitalWrite (blue, HIGH);
+    digitalWrite (green,LOW);
+    digitalWrite (red,HIGH);
+    }
+  else if (value <= 300){
+    Serial.println("Dry");
+    digitalWrite (blue,LOW);
+    digitalWrite (red,HIGH);
+    digitalWrite (green,HIGH);
+    delay(100);
+    }
+  if (value > 630){
+    tone(buzzer, 700); // Send 1KHz sound signal...
+    delay(750);        // ...for 1 sec
+    noTone(buzzer);     // Stop sound...
+    delay(500);        // ...for 1sec
+  }
+  }
